@@ -1,0 +1,105 @@
+@font-face {
+  font-display: swap;
+  font-family: 'Aclonica';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/aclonica-regular.woff2') format('woff2');
+}
+
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+h1, 
+h2, 
+p {
+  margin: 0 auto;
+  padding: 0;
+}
+
+html {
+  font-family: 'Aclonica', sans-serif;
+  background-color: #18723f;
+  cursor: default;
+}
+
+body {
+  position: relative;
+  min-width: 20rem;
+  margin: 0;
+  padding: 2rem;
+}
+
+.game__title {
+  font-size: 1.5rem;
+  color: #caff00;
+  text-align: center;
+  margin-bottom: 1.6rem;
+}
+
+.game__container {
+  max-width: 25rem;
+  max-height: 25rem;
+  margin: 0 auto;
+  display: grid;
+  gap: 0.3rem 0.3rem;
+}
+
+.game__cell {
+  aspect-ratio: 1 / 1;
+  border: 0.2rem solid transparent;
+  border-radius: 3rem;
+  background-color: #ffffd1;
+  background-size: 4rem;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.game__cell-active {
+  background-image: url("../img/goblin.png");
+  cursor: url("../img/cursor.png") 15 15, pointer;
+}
+
+.game__cell-hit {
+  border-color: #caff00;
+}
+
+.game__cell-miss {
+  border-color: #ff2121;
+}
+
+.game__result {
+  max-width: 250px;
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #caff00;
+  line-height: 1.5rem;
+}
+
+.game__btn {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-radius: 2rem;
+  background-color: #caff00;
+  text-align: center;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #7b0d0d;
+}
+
+.game__btn:active {
+  transform: scale(0.9);
+}
