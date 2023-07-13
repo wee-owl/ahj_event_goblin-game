@@ -1,11 +1,11 @@
-import BOARD_SIZE from './const';
+import { BOARD_SIZE, LOSE_COUNT, WIN_COUNT } from './const';
 
 export default class Game {
   constructor(element) {
     this.element = element;
     this.cells = [];
     this.hit = 0;
-    this.miss = 0;
+    this.appear = 0;
   }
 
   initGame() {
@@ -48,7 +48,7 @@ export default class Game {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       this.hit = 0;
-      this.miss = 0;
+      this.appear = 0;
       if (document.querySelector('.game__result')) {
         document.querySelector('.game__result').remove();
         this.container.style.pointerEvents = '';
@@ -66,6 +66,9 @@ export default class Game {
     const arr = [...Array(BOARD_SIZE ** 2)].map((_, i = 0) => i + 1);
     let current = 0;
     const timerId = setInterval(() => {
+      // eslint-disable-next-line no-console
+      console.log('Hit:', this.hit, 'Miss:', this.appear);
+      this.stopGame();
       if (document.querySelector('.game__result')) {
         clearInterval(timerId);
       }
@@ -73,6 +76,7 @@ export default class Game {
       if (current === random) random = Math.abs(random - 1);
       this.cells.forEach((cell) => cell.classList.remove('game__cell-active'));
       this.cells[random].classList.add('game__cell-active');
+      this.appear += 1;
       current = random;
     }, 700);
   }
@@ -83,22 +87,19 @@ export default class Game {
       if (!cell) return;
       if (cell.classList.contains('game__cell-active')) {
         this.hit += 1;
+        this.appear = 0;
         cell.classList.add('game__cell-hit');
         setTimeout(() => cell.classList.remove('game__cell-hit'), 400);
       } else {
-        this.miss += 1;
         cell.classList.add('game__cell-miss');
         setTimeout(() => cell.classList.remove('game__cell-miss'), 400);
       }
-      // eslint-disable-next-line no-console
-      console.log('Hit:', this.hit, 'Miss:', this.miss);
-      this.stopGame();
     });
   }
 
   stopGame() {
-    if (this.hit === 10) this.renderResult('win');
-    if (this.miss === 10) this.renderResult('lose');
+    if (this.hit === WIN_COUNT) this.renderResult('win');
+    if (this.appear === LOSE_COUNT) this.renderResult('lose');
   }
 
   renderResult(text) {
@@ -109,13 +110,11 @@ export default class Game {
       message = `
         You win!
         Number of hits: ${this.hit}
-        Number of misses: ${this.miss}
       `;
     } else {
       message = `
         You lose!
-        Number of hits: ${this.hit}
-        Number of misses: ${this.miss}
+        Number of misses: ${this.appear}
       `;
     }
     result.innerText = message;
